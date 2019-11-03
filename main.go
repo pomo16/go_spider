@@ -1,17 +1,19 @@
 package main
 
-import "gowatcher/go_spider/consts"
+import "gowatcher/go_spider/crons"
 
 func main() {
-	S := NewAppleCommentSpider()
-	G := NewCommentGraph()
+	//S := NewAppleCommentSpider()
+	//G := NewCommentGraph()
+	//
+	////定义任务列表，ID映射可查看consts.go
+	//K := []string{"抖音"}
+	//
+	//T := []string{}
+	//for _, v := range K {
+	//	T = append(T, consts.GetAppMap()[v])
+	//}
+	//StartCrawl(S, G, T)
 
-	//定义任务列表，ID映射可查看consts.go
-	K := []string{"抖音"}
-
-	T := []string{}
-	for _, v := range K {
-		T = append(T, consts.GetAppMap()[v])
-	}
-	StartCrawl(S, G, T)
+	crons.CronJobs()
 }
