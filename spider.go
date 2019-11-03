@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"github.com/tidwall/gjson"
-	"liuhanxuan/go_spider/model"
+	"gowatcher/go_spider/model"
 	"log"
 )
 
@@ -91,7 +91,7 @@ func (s *AppleCommentSpider) InitDownloader() {
 	s.Downloader.OnResponse(func(r *colly.Response) {
 		s.StatusCode = r.StatusCode
 		s.Resp = string(r.Body)
-		fmt.Println(s.Resp, s.StatusCode)
+		//fmt.Println(s.Resp, s.StatusCode)
 	})
 
 	s.Downloader.OnError(func(resp *colly.Response, errHttp error) {
@@ -133,11 +133,10 @@ func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
 }
 
 //CrawlComment 爬取评论
-func CrawlComment(s *AppleCommentSpider, g CommentGraph) {
-	url := "https://itunes.apple.com/WebObjects/MZStore.woa/wa/userReviewsRow?cc=cn&id=1142110895&displayable-kind=11&startIndex=0&endIndex=100&sort=0&appVersion=all"
+func CrawlComment(s *AppleCommentSpider, g CommentGraph, t string) {
+	url := "https://itunes.apple.com/WebObjects/MZStore.woa/wa/userReviewsRow?cc=cn&id=" + t + "&displayable-kind=11&startIndex=0&endIndex=100&sort=0&appVersion=all"
 	s.Crawl(url)
 	s.ParseCommentContent(g)
-	fmt.Println(len(g))
 }
 
 //InitDownloader 初始化下载器
@@ -166,7 +165,9 @@ func (s *AppleVersionSpider) InitDownloader() {
 }
 
 //StartCrawl 执行爬取流程
-func StartCrawl(k *AppleCommentSpider, g CommentGraph, ts string) {
-	CrawlComment(k, g)
+func StartCrawl(k *AppleCommentSpider, g CommentGraph, ts []string) {
+	for _, t := range ts {
+		CrawlComment(k, g, t)
+	}
 }
 
