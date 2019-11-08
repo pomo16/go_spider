@@ -1,9 +1,10 @@
-package main
+package service
 
 import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"github.com/tidwall/gjson"
+	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
 	"log"
@@ -136,9 +137,9 @@ func (s *AppleCommentSpider) ParseCommentContent(g CommentGraph) {
 //CrawlComment 爬取评论
 func CrawlComment(s *AppleCommentSpider, g CommentGraph, t string) {
 	params := model.CommentParams{
-		AppID:   t,
+		AppID:      t,
 		StartIndex: 0,
-		EndIndex: 200,
+		EndIndex:   200,
 	}
 	url := utils.GetCommentURL(t, &params)
 	s.Crawl(url)
@@ -174,9 +175,16 @@ func (s *AppleVersionSpider) InitDownloader() {
 	})
 }
 
-//StartCrawl 执行爬取流程
-func StartCrawl(k *AppleCommentSpider, g CommentGraph, ts []string) {
-	for _, t := range ts {
-		CrawlComment(k, g, t)
+//Crawl 执行爬取流程
+func Crawl(k *AppleCommentSpider, g CommentGraph, t *model.Task) {
+
+}
+
+//StartCrawl 爬虫任务
+func StartCrawl(k *AppleCommentSpider, g CommentGraph, tasks TaskDict) {
+	for _, t := range tasks {
+		if t.Status == consts.NORMAL {
+			Crawl(k, g, t)
+		}
 	}
 }
