@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gowatcher/go_spider/service"
 )
 
@@ -19,9 +18,6 @@ func main() {
 	//K := service.GlobalTaskLoader.GetTaskMap()
 	//service.StartCrawl(S, G, K)
 	service.StartCrawl(S, G, make(service.TaskDict))
-	for _, v := range G {
-		fmt.Printf("%+v\n", v.PublishTime)
-	}
 
 	//crons.CronJobs()
 }
