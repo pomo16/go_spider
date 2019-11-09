@@ -4,7 +4,7 @@ type CommentSpider struct {
 	CommentId   string `json:"userReviewId"`
 	Title       string `json:"title"`
 	Content     string `json:"body"`
-	Rating      int64  `json:"rating"`
+	Rating      string `json:"rating"`
 	PublishTime string `json:"date"`
 }
 

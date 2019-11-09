@@ -11,8 +11,8 @@ func Init() {
 }
 
 func main() {
-	S := service.NewAppleCommentSpider()
-	G := service.NewCommentGraph()
+	S := service.NewAppleSpiders()
+	G := service.NewGraph()
 
 	//任务列表
 	//K := service.GlobalTaskLoader.GetTaskMap()
