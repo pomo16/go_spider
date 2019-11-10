@@ -45,7 +45,7 @@ func ConvertGoTimeToStd(src string) string {
 //FillLastCrawlTime 填充最后爬取时间
 func FillLastCrawlTime() string {
 	curTime := time.Now()
-	duration, _ := time.ParseDuration("-1h")
+	duration, _ := time.ParseDuration("-6h")
 	eTime := curTime.Add(duration)
 	return eTime.Format(consts.TimeStr)
 }

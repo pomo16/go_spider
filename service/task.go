@@ -18,7 +18,7 @@ type TaskLoader struct {
 //NewTaskLoader 创建任务加载器
 func NewTaskLoader() *TaskLoader {
 	return &TaskLoader{
-		TaskMap:  make(TaskDict, 0),
+		TaskMap:  make(TaskDict),
 		LastTime: "2019-01-01 00:00:00",
 	}
 }

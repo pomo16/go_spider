@@ -1,8 +1,8 @@
 package crons
 
 import (
-	"fmt"
 	"github.com/robfig/cron"
+	"gowatcher/go_spider/service"
 )
 
 //InitCrons 初始化定时更新任务
@@ -12,14 +12,23 @@ func InitCrons() {
 
 //CronJobs 定时任务
 func CronJobs() {
-	i := 0
 	c := cron.New()
 	spec := "*/1 * * * *"
-	c.AddFunc(spec, func() {
-		i++
-		fmt.Println("crons running:", i)
-	})
+	_, err := c.AddFunc(spec, StartSpiders)
+	if err != nil {
+		panic(err)
+	}
 	c.Start()
 
 	select {}
+}
+
+//StartSpiders 定时爬虫任务
+func StartSpiders() {
+	service.GlobalTaskLoader.Load()
+	S := service.NewAppleSpiders()
+	G := service.NewGraph()
+	//任务列表
+	K := service.GlobalTaskLoader.GetTaskMap()
+	service.StartCrawl(S, G, K)
 }

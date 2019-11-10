@@ -2,7 +2,6 @@ package database
 
 import (
 	"code.byted.org/gopkg/logs"
-	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"gowatcher/go_spider/exceptions"
@@ -26,7 +25,6 @@ func InitDB() {
 
 //QueryTasks 获取爬虫任务列表
 func QueryTasks(lastTime string) (*model.TaskTable, error) {
-	fmt.Println(dbReader)
 	rows, err := dbReader.Table("gowatcher.crawl_task_table").Debug().
 		Select("id, app_name, app_id, status, create_time, modify_time").
 		Where("modify_time > ?", lastTime).Order("modify_time").Rows()
