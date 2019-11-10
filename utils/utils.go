@@ -54,3 +54,14 @@ func FillLastCrawlTime() string {
 func GenMainKey(key string) string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(key)))
 }
+
+//AdjustCrawlTime 调整最后爬取时间
+func AdjustCrawlTime(base string) string {
+	now := time.Now()
+	lastCrawlTime, _ := time.ParseInLocation(consts.TimeStr, base, time.Local)
+	if now.Sub(lastCrawlTime).Hours() > 24 {
+		return FillLastCrawlTime()
+	} else {
+		return base
+	}
+}

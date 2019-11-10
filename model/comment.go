@@ -8,12 +8,6 @@ type CommentSpider struct {
 	PublishTime string `json:"date"`
 }
 
-type VersionSpider struct {
-	CommentId string
-	AppName   string
-	Version   string
-}
-
 type Comment struct {
 	CommentId   string
 	MainId      string
