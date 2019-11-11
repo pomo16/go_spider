@@ -20,4 +20,4 @@ const (
 const PageSize = 100
 
 //Timing 定时时机
-const Timing = "*/1 * * * *"
+const Timing = "0 */6 * * *"
