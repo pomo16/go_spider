@@ -6,3 +6,5 @@ mysql:
 
 kafka:
   topic: gowatcher_crawl
+  host: localhost
+  port: 9092

@@ -21,3 +21,6 @@ const PageSize = 100
 
 //Timing 定时时机
 const Timing = "0 */6 * * *"
+
+//Topic Kafka topic
+const Topic = "test"

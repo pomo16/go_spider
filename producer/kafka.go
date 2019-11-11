@@ -10,7 +10,7 @@ import (
 func SendToKafka() {
 	//构建发送的消息，
 	msg := &sarama.ProducerMessage{
-		Topic: "test", //包含了消息的主题
+		Topic: consts.Topic, //包含了消息的主题
 	}
 
 	var value string

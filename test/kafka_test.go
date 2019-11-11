@@ -6,5 +6,6 @@ import (
 )
 
 func TestKafka(t *testing.T) {
+	producer.InitProducer()
 	producer.SendToKafka()
 }
