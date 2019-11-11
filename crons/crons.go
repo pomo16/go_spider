@@ -2,6 +2,7 @@ package crons
 
 import (
 	"github.com/robfig/cron"
+	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/service"
 )
 
@@ -13,7 +14,7 @@ func InitCrons() {
 //CronJobs 定时任务
 func CronJobs() {
 	c := cron.New()
-	spec := "*/1 * * * *"
+	spec := consts.Timing
 	err := c.AddFunc(spec, StartSpiders)
 	if err != nil {
 		panic(err)

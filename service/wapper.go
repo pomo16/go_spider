@@ -8,4 +8,5 @@ var (
 //InitTaskService 初始化任务服务
 func InitTaskService() {
 	GlobalTaskLoader = NewTaskLoader()
+	GlobalTaskLoader.Load()
 }

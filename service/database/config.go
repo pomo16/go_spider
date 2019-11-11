@@ -3,10 +3,13 @@ package database
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gopkg.in/yaml.v2"
 	"gowatcher/go_spider/exceptions"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
 	"log"
+	"os"
+	"path/filepath"
 )
 
 var (
@@ -14,13 +17,35 @@ var (
 )
 
 func InitDB() {
-	db, err := gorm.Open("mysql", "root:root9898008@tcp(134.175.33.133:3306)/gowatcher?charset=utf8&parseTime=True&loc=Local")
+	path, _ := filepath.Abs("config/config.yaml")
+	dbLink, err := ReadYamlConfig(path)
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := gorm.Open("mysql", dbLink)
 	if err == nil {
 		db.SingularTable(true)
 		dbReader = db
 	} else {
 		panic(err)
 	}
+}
+
+//ReadYamlConfig 读取yaml配置文件返回数据库链接
+func ReadYamlConfig(path string) (string, error) {
+	conf := &model.Config{}
+	if f, err := os.Open(path); err != nil {
+		return "", exceptions.ErrFileRead
+	} else {
+		yaml.NewDecoder(f).Decode(conf)
+	}
+
+	dbConfig := conf.Mysql
+	link := dbConfig.UserName + ":" + dbConfig.Password +
+		"@tcp(" + dbConfig.Host + ":" + dbConfig.Port +
+		")/gowatcher?charset=utf8&parseTime=True&loc=Local"
+	return link, nil
 }
 
 //QueryTasks 获取爬虫任务列表

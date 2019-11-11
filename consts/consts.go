@@ -18,3 +18,6 @@ const (
 
 //PageSize 爬虫偏移量
 const PageSize = 100
+
+//Timing 定时时机
+const Timing = "*/1 * * * *"
