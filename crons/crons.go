@@ -14,7 +14,7 @@ func InitCrons() {
 func CronJobs() {
 	c := cron.New()
 	spec := "*/1 * * * *"
-	_, err := c.AddFunc(spec, StartSpiders)
+	err := c.AddFunc(spec, StartSpiders)
 	if err != nil {
 		panic(err)
 	}

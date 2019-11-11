@@ -1,12 +1,12 @@
 package database
 
 import (
-	"code.byted.org/gopkg/logs"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"gowatcher/go_spider/exceptions"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
+	"log"
 )
 
 var (
@@ -31,7 +31,7 @@ func QueryTasks(lastTime string) (*model.TaskTable, error) {
 
 	defer func() {
 		if r := recover(); r != nil {
-			logs.Error("Recovered in QueryTasks: %v", r)
+			log.Fatalf("Recovered in QueryTasks: %v\n", r)
 		}
 
 		//官方文档示例未考虑指针为空调用Close会panic的情形
@@ -41,7 +41,7 @@ func QueryTasks(lastTime string) (*model.TaskTable, error) {
 	}()
 
 	if err != nil {
-		logs.Warn("QueryTasks error, err: %v", err.Error())
+		log.Printf("QueryTasks error, err: %v\n", err.Error())
 		return nil, exceptions.ErrDBHandle
 	}
 
