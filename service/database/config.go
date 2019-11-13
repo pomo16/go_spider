@@ -17,7 +17,7 @@ var (
 )
 
 func InitDB() {
-	dbLink, err := readYamlConfig()
+	dbLink, err := ReadYamlConfig()
 	if err != nil {
 		panic(err)
 	}
@@ -31,9 +31,9 @@ func InitDB() {
 	}
 }
 
-//readYamlConfig 读取yaml配置文件返回数据库链接
-func readYamlConfig() (string, error) {
-	path, _ := filepath.Abs("config/config.yaml")
+//ReadYamlConfig 读取yaml配置文件返回数据库链接
+func ReadYamlConfig() (string, error) {
+	path, _ := filepath.Abs("../config/config.yaml")
 	conf := &model.Config{}
 	if f, err := os.Open(path); err != nil {
 		return "", exceptions.ErrFileRead

@@ -29,7 +29,7 @@ func newKafkaSender() (sarama.SyncProducer, error) {
 	// 是否等待成功和失败后的响应
 	config.Producer.Return.Successes = true
 
-	kfLink, _ := readYamlConfig()
+	kfLink, _ := ReadYamlConfig()
 	sender, err := sarama.NewSyncProducer([]string{kfLink}, config)
 	if err != nil {
 		log.Fatalf("init kafka sender failed,err:%v\n", err)
@@ -39,9 +39,9 @@ func newKafkaSender() (sarama.SyncProducer, error) {
 	return sender, nil
 }
 
-//readYamlConfig 读取yaml配置文件返回kafka链接
-func readYamlConfig() (string, error) {
-	path, _ := filepath.Abs("config/config.yaml")
+//ReadYamlConfig 读取yaml配置文件返回kafka链接
+func ReadYamlConfig() (string, error) {
+	path, _ := filepath.Abs("../config/config.yaml")
 	conf := &model.Config{}
 	if f, err := os.Open(path); err != nil {
 		return "", exceptions.ErrFileRead
