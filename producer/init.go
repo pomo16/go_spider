@@ -41,7 +41,7 @@ func newKafkaSender() (sarama.SyncProducer, error) {
 
 //ReadYamlConfig 读取yaml配置文件返回kafka链接
 func ReadYamlConfig() (string, error) {
-	path, _ := filepath.Abs("../config/config.yaml")
+	path, _ := filepath.Abs("config/config.yaml")
 	conf := &model.Config{}
 	if f, err := os.Open(path); err != nil {
 		return "", exceptions.ErrFileRead
