@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"gopkg.in/yaml.v2"
+	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/exceptions"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
@@ -33,7 +34,7 @@ func InitDB() {
 
 //ReadYamlConfig 读取yaml配置文件返回数据库链接
 func ReadYamlConfig() (string, error) {
-	path, _ := filepath.Abs("../config/config.yaml")
+	path, _ := filepath.Abs(consts.ConfFilePath)
 	conf := &model.Config{}
 	if f, err := os.Open(path); err != nil {
 		return "", exceptions.ErrFileRead

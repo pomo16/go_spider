@@ -24,3 +24,6 @@ const Timing = "0 */6 * * *"
 
 //Topic Kafka topic
 const Topic = "test"
+
+//ConfFilePath 配置文件路径
+const ConfFilePath = "config/config.yaml"

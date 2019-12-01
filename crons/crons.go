@@ -13,6 +13,7 @@ func InitCrons() {
 
 //CronJobs 定时任务
 func CronJobs() {
+	StartSpiders()
 	c := cron.New()
 	spec := consts.Timing
 	err := c.AddFunc(spec, StartSpiders)
