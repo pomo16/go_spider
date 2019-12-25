@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/sirupsen/logrus"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/service/database"
 	"gowatcher/go_spider/utils"
@@ -27,6 +28,7 @@ func NewTaskLoader() *TaskLoader {
 func (p *TaskLoader) Load() {
 	rows, err := database.QueryTasks(p.LastTime)
 	if err != nil {
+		logrus.Error(err)
 		panic(err)
 	}
 

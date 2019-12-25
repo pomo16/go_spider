@@ -3,12 +3,12 @@ package database
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/exceptions"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
-	"log"
 	"os"
 	"path/filepath"
 )
@@ -57,7 +57,7 @@ func QueryTasks(lastTime string) (*model.TaskTable, error) {
 
 	defer func() {
 		if r := recover(); r != nil {
-			log.Fatalf("Recovered in QueryTasks: %v\n", r)
+			logrus.Errorf("Recovered in QueryTasks: %v", r)
 		}
 
 		//官方文档示例未考虑指针为空调用Close会panic的情形
@@ -67,7 +67,7 @@ func QueryTasks(lastTime string) (*model.TaskTable, error) {
 	}()
 
 	if err != nil {
-		log.Printf("QueryTasks error, err: %v\n", err.Error())
+		logrus.Errorf("QueryTasks error, err: %v", err.Error())
 		return nil, exceptions.ErrDBHandle
 	}
 

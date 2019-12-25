@@ -1,13 +1,12 @@
 package service
 
 import (
-	"fmt"
 	"github.com/gocolly/colly"
+	"github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
 	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/utils"
-	"log"
 	"time"
 )
 
@@ -96,7 +95,7 @@ func (s *AppleCommentSpider) InitDownloader() {
 
 	s.Downloader.OnError(func(resp *colly.Response, errHttp error) {
 		s.Err = errHttp.Error()
-		fmt.Println(s.Err)
+		logrus.Error("AppleCommentSpider InitDownloader error: ", s.Err)
 	})
 }
 
@@ -108,11 +107,11 @@ func (s *AppleCommentSpider) Result() string {
 //Crawl 获取指定链接的内容
 func (s *AppleCommentSpider) Crawl(url string) error {
 	if err := s.Downloader.Visit(url); err != nil {
-		log.Println("Visit:", url, " [error]", err)
+		logrus.Error("Visit:", url, " [error]", err)
 		return err
 	}
 	s.Downloader.Wait()
-	log.Println("Visit:", url, " [success]")
+	logrus.Info("Visit:", url, " [success]")
 	return nil
 }
 
@@ -222,18 +221,18 @@ func (s *AppleVersionSpider) InitDownloader() {
 
 	s.Downloader.OnError(func(resp *colly.Response, errHttp error) {
 		s.Err = errHttp.Error()
-		fmt.Println(s.Err)
+		logrus.Error("AppleVersionSpider InitDownloader error: ", s.Err)
 	})
 }
 
 //Crawl 获取指定链接的内容
 func (s *AppleVersionSpider) Crawl(url string) error {
 	if err := s.Downloader.Visit(url); err != nil {
-		log.Println("Visit:", url, " [error]", err)
+		logrus.Error("Visit:", url, " [error]", err)
 		return err
 	}
 	s.Downloader.Wait()
-	log.Println("Visit:", url, " [success]")
+	logrus.Info("Visit:", url, " [success]")
 	return nil
 }
 
@@ -305,6 +304,6 @@ func StartCrawl(k *AppleSpiders, g Graph, tasks TaskDict) {
 		}
 	}
 	for k, v := range g {
-		fmt.Printf("k: %+v, v: %+v\n", k, v)
+		logrus.Info("k:", k, "v:", v)
 	}
 }

@@ -27,3 +27,11 @@ const Topic = "test"
 
 //ConfFilePath 配置文件路径
 const ConfFilePath = "config/config.yaml"
+
+//log文件相关
+const (
+	LogFilePath    = "output/go_spider_log"
+	LogFilePrefix  = "spider"
+	LogFileTimeStr = "20060102150405"
+	LogFileSuffix  = ".log"
+)

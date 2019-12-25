@@ -1,0 +1,42 @@
+package utils
+
+import (
+	"github.com/sirupsen/logrus"
+	"gowatcher/go_spider/consts"
+	"io"
+	"os"
+	"path"
+	"path/filepath"
+	"time"
+)
+
+func InitLogger() {
+	beginTime := time.Now()
+	logInit(&beginTime)
+	logrus.Infof("Task begin at: %v", beginTime.Format(consts.TimeStr))
+}
+
+//logFile 日志文件对象
+var logFile *os.File
+
+//logInit 初始化日志组件
+func logInit(logTime *time.Time) {
+	logFilePath, _ := filepath.Abs(consts.LogFilePath)
+	logFileName := consts.LogFilePrefix + logTime.Format(consts.LogFileTimeStr) + consts.LogFileSuffix
+	fileName := path.Join(logFilePath, logFileName)
+	logFile, _ = os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+
+	logrus.SetOutput(io.MultiWriter(os.Stderr, logFile))
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat: consts.TimeStr,
+	})
+	logrus.RegisterExitHandler(closeLogFile)
+}
+
+//closeLogFile 关闭日志文件对象
+func closeLogFile() {
+	logrus.Infof("Task end at: %v", time.Now().Format(consts.TimeStr))
+	if logFile != nil {
+		logFile.Close()
+	}
+}
