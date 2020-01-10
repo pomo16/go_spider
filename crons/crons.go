@@ -15,7 +15,10 @@ func InitCrons() {
 
 //CronJobs 定时任务
 func CronJobs() {
+	//直接先运行一次任务
 	StartSpiders()
+
+	//定时循环
 	c := cron.New()
 	spec := consts.Timing
 	err := c.AddFunc(spec, StartSpiders)
@@ -30,11 +33,12 @@ func CronJobs() {
 //StartSpiders 定时爬虫任务
 func StartSpiders() {
 	utils.InitLogger()
+
 	service.GlobalTaskLoader.Load()
 	S := service.NewAppleSpiders()
 	G := service.NewGraph()
-	//任务列表
-	K := service.GlobalTaskLoader.GetTaskMap()
-	service.StartCrawl(S, G, K)
+	T := service.GlobalTaskLoader.GetTaskMap()
+	service.StartCrawl(S, G, T)
+
 	logrus.Exit(0)
 }

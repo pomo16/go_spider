@@ -3,6 +3,7 @@ package model
 type Config struct {
 	Mysql DBConfig `yaml:"mysql"`
 	Kafka KFConfig `yaml:"kafka"`
+	Redis RDConfig `yaml:"redis"`
 }
 
 type DBConfig struct {
@@ -15,4 +16,10 @@ type DBConfig struct {
 type KFConfig struct {
 	Host string `yaml:"host"`
 	Port string `yaml:"port"`
+}
+
+type RDConfig struct {
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	Password string `yaml:"password"`
 }

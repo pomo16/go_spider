@@ -1,5 +1,7 @@
 package consts
 
+import "time"
+
 //Url 爬虫URL
 const (
 	CommentUrlPrefix = "https://itunes.apple.com/WebObjects/MZStore.woa/wa/userReviewsRow?cc=cn&displayable-kind=11&sort=0&appVersion=all"
@@ -25,8 +27,8 @@ const Timing = "0 */6 * * *"
 //Topic Kafka topic
 const Topic = "test"
 
-//ConfFilePath 配置文件路径
-const ConfFilePath = "config/config.yaml"
+//ConfFile 配置文件路径
+const ConfFile = "../config/config.yaml"
 
 //log文件相关
 const (
@@ -34,4 +36,10 @@ const (
 	LogFilePrefix  = "spider"
 	LogFileTimeStr = "20060102150405"
 	LogFileSuffix  = ".log"
+)
+
+//Redis
+const (
+	RedisCTPrefix = "spider:ct:"
+	CrawlTimeExpired = 48 * time.Hour
 )

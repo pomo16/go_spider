@@ -59,6 +59,7 @@ func GenMainKey(key string) string {
 func AdjustCrawlTime(base string) string {
 	now := time.Now()
 	lastCrawlTime, _ := time.ParseInLocation(consts.TimeStr, base, time.Local)
+	//判断如果时差大于一天则重新填充时间
 	if now.Sub(lastCrawlTime).Hours() > 24 {
 		return FillLastCrawlTime()
 	} else {

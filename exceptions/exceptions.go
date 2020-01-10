@@ -11,6 +11,9 @@ var (
 	//ErrKafkaSead Kafka发送失败
 	ErrKafkaSend = errors.New("send kafka error")
 
-	//ErrFileRead 文件读取失败
-	ErrFileRead = errors.New("read file error")
+	//ErrConfigRead 配置读取失败
+	ErrConfigRead = errors.New("read config error")
+
+	//ErrRedisHandle Redis执行失败
+	ErrRedisHandle = errors.New("handle redis error")
 )
