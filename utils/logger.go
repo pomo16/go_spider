@@ -24,7 +24,7 @@ func logInit(logTime *time.Time) {
 	logFilePath, _ := filepath.Abs(consts.LogFilePath)
 	logFileName := consts.LogFilePrefix + logTime.Format(consts.LogFileTimeStr) + consts.LogFileSuffix
 	fileName := path.Join(logFilePath, logFileName)
-	logFile, _ = os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	logFile, _ = os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
 
 	logrus.SetOutput(io.MultiWriter(os.Stderr, logFile))
 	logrus.SetFormatter(&logrus.JSONFormatter{
