@@ -33,7 +33,7 @@ const ConfFile = "config/config.yaml"
 
 //log文件相关
 const (
-	LogFilePath    = "output/go_spider_log"
+	LogFilePath    = "go_spider_log"
 	LogFilePrefix  = "spider"
 	LogFileTimeStr = "20060102150405"
 	LogFileSuffix  = ".log"
