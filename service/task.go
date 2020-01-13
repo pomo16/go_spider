@@ -4,10 +4,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"gowatcher/go_spider/model"
 	"gowatcher/go_spider/service/database"
-	"gowatcher/go_spider/utils"
 )
 
-//TaskDict 存储app_id + 最后爬取时间 + 任务状态
+//TaskDict 存储app_id + 任务状态
 type TaskDict map[string]*model.Task
 
 //TaskLoader 任务加载器
@@ -45,7 +44,6 @@ func (p *TaskLoader) ModifyTask(task *model.TaskRow) {
 	if _, ok := p.TaskMap[task.AppID]; !ok {
 		p.TaskMap[task.AppID] = &model.Task{
 			AppID:         task.AppID,
-			LastCrawlTime: utils.FillLastCrawlTime(),
 			Status:        task.Status,
 		}
 	} else {

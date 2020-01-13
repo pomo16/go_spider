@@ -6,6 +6,7 @@ import (
 	"github.com/tidwall/gjson"
 	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/model"
+	"gowatcher/go_spider/service/redis"
 	"gowatcher/go_spider/utils"
 	"time"
 )
@@ -165,7 +166,7 @@ func (s *AppleCommentSpider) ParsePagesCommentContent(g CommentGraph, t string) 
 }
 
 //CrawlComment 爬取评论
-func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
+func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task, ct string) int {
 	tmp := make(CommentGraph)
 	params := model.CommentParams{
 		AppID:      t.AppID,
@@ -174,7 +175,7 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
 	}
 	url := utils.GetCommentURL(&params)
 	s.Crawl(url)
-	recentTime, hit := s.ParseFirstCommentContent(tmp, t.LastCrawlTime)
+	recentTime, hit := s.ParseFirstCommentContent(tmp, ct)
 	time.Sleep(1 * time.Second)
 
 	//如果第一次就命中，则无需多页爬取
@@ -183,12 +184,12 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
 		params.EndIndex += consts.PageSize
 		url = utils.GetCommentURL(&params)
 		s.Crawl(url)
-		hit = s.ParsePagesCommentContent(tmp, t.LastCrawlTime)
+		hit = s.ParsePagesCommentContent(tmp, ct)
 		time.Sleep(1 * time.Second)
 	}
 
-	if recentTime > t.LastCrawlTime {
-		t.LastCrawlTime = recentTime
+	if recentTime > ct {
+		ct = recentTime
 	}
 
 	if len(tmp) > 0 {
@@ -196,6 +197,8 @@ func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task) int {
 			g[t.AppID+"|"+k] = v
 		}
 	}
+
+	redis.SetCrawlTime(t.AppID, ct)
 
 	return len(tmp)
 }
@@ -262,13 +265,15 @@ func CrawlVersion(s *AppleVersionSpider, g VersionGraph, params model.VersionPar
 }
 
 //Crawl 执行爬虫流程
-func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
+func Crawl(k *AppleSpiders, g Graph, t *model.Task, ct string) {
+	//爬取带时间的用户评论
 	cg := make(CommentGraph)
-	num := CrawlComment(k.AppleCommentSpider, cg, t)
+	num := CrawlComment(k.AppleCommentSpider, cg, t, ct)
 	if num == 0 {
 		return
 	}
 
+	//爬取带版本号的用户评论
 	vg := make(VersionGraph)
 	pages := utils.GetVersionPages(num)
 	params := model.VersionParams{}
@@ -278,6 +283,10 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
 		CrawlVersion(k.AppleVersionSpider, vg, params)
 	}
 
+	//爬取时间
+	crawlTime := time.Now().Format(consts.TimeStr)
+
+	//评论版本号匹配逻辑
 	for k, v := range cg {
 		comment := &model.Comment{
 			CommentId:   v.CommentId,
@@ -286,7 +295,7 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
 			Rating:      v.Rating,
 			Version:     "UNKNOWN",
 			PublishTime: v.PublishTime,
-			CrawlTime:   t.LastCrawlTime,
+			CrawlTime:   crawlTime,
 		}
 		if _, ok := vg[v.CommentId]; ok {
 			comment.Version = vg[v.CommentId]
@@ -299,8 +308,9 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task) {
 func StartCrawl(k *AppleSpiders, g Graph, tasks TaskDict) {
 	for _, t := range tasks {
 		if t.Status == consts.Normal {
-			t.LastCrawlTime = utils.AdjustCrawlTime(t.LastCrawlTime)
-			Crawl(k, g, t)
+			LastCrawlTime, _ := redis.GetCrawlTime(t.AppID)
+			LastCrawlTime = utils.AdjustCrawlTime(LastCrawlTime)
+			Crawl(k, g, t, LastCrawlTime)
 		}
 	}
 	for k, v := range g {

@@ -4,7 +4,6 @@ import (
 	"github.com/robfig/cron"
 	"github.com/sirupsen/logrus"
 	"gowatcher/go_spider/consts"
-	"gowatcher/go_spider/service"
 	"gowatcher/go_spider/utils"
 )
 
@@ -33,12 +32,14 @@ func CronJobs() {
 //StartSpiders 定时爬虫任务
 func StartSpiders() {
 	utils.InitLogger()
+	defer utils.CloseLogFile()
+	//service.GlobalTaskLoader.Load()
+	//S := service.NewAppleSpiders()
+	//G := service.NewGraph()
+	//T := service.GlobalTaskLoader.GetTaskMap()
+	//service.StartCrawl(S, G, T)
+	logrus.Error("test")
 
-	service.GlobalTaskLoader.Load()
-	S := service.NewAppleSpiders()
-	G := service.NewGraph()
-	T := service.GlobalTaskLoader.GetTaskMap()
-	service.StartCrawl(S, G, T)
-
-	logrus.Exit(0)
+	//Banned.This method will kill the program.
+	//logrus.Exit(0)
 }

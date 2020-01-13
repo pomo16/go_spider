@@ -30,11 +30,13 @@ func logInit(logTime *time.Time) {
 	logrus.SetFormatter(&logrus.JSONFormatter{
 		TimestampFormat: consts.TimeStr,
 	})
-	logrus.RegisterExitHandler(closeLogFile)
+
+	//exit方法禁止使用
+	//logrus.RegisterExitHandler(closeLogFile)
 }
 
-//closeLogFile 关闭日志文件对象
-func closeLogFile() {
+//CloseLogFile 关闭日志文件对象
+func CloseLogFile() {
 	logrus.Infof("Task end at: %v", time.Now().Format(consts.TimeStr))
 	if logFile != nil {
 		logFile.Close()

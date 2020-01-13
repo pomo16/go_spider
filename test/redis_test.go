@@ -14,14 +14,14 @@ func TestRedisPing(t *testing.T) {
 
 func TestRedis(t *testing.T) {
 	redis.InitRedis()
-	appName := "TestApp"
-	err := redis.SetCrawlTime(appName, utils.FillLastCrawlTime())
+	appID := "TestApp"
+	err := redis.SetCrawlTime(appID, utils.FillLastCrawlTime())
 	if err != nil {
 		fmt.Println("set_err:", err)
 		return
 	}
 
-	res, err := redis.GetCrawlTime(appName + "1")
+	res, err := redis.GetCrawlTime(appID)
 	if err != nil {
 		fmt.Println("get_err:", err)
 		return

@@ -7,5 +7,5 @@ import (
 )
 
 func TestUtil(t *testing.T) {
-	fmt.Println(utils.FillLastCrawlTime())
+	fmt.Println(utils.AdjustCrawlTime(""))
 }

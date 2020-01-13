@@ -23,12 +23,13 @@ const PageSize = 100
 
 //Timing 定时时机
 const Timing = "0 */6 * * *"
+const TestTiming = "*/1 * * * *"
 
 //Topic Kafka topic
 const Topic = "test"
 
 //ConfFile 配置文件路径
-const ConfFile = "../config/config.yaml"
+const ConfFile = "config/config.yaml"
 
 //log文件相关
 const (
