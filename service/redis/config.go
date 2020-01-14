@@ -46,4 +46,3 @@ func PingRedis() {
 	pong, err := redisClient.Ping().Result()
 	fmt.Println(pong, err)
 }
-

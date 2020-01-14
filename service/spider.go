@@ -165,7 +165,7 @@ func (s *AppleCommentSpider) ParsePagesCommentContent(g CommentGraph, t string) 
 	return hit
 }
 
-//CrawlComment 爬取评论
+//CrawlComment 爬取评论，并返回有效评论数
 func CrawlComment(s *AppleCommentSpider, g CommentGraph, t *model.Task, ct string) int {
 	tmp := make(CommentGraph)
 	params := model.CommentParams{
@@ -313,7 +313,7 @@ func StartCrawl(k *AppleSpiders, g Graph, tasks TaskDict) {
 			Crawl(k, g, t, LastCrawlTime)
 		}
 	}
-	for k, v := range g {
-		logrus.Info("k:", k, "v:", v)
-	}
+	//for k, v := range g {
+	//	logrus.Info("k:", k, "v:", v)
+	//}
 }

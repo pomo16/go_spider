@@ -16,4 +16,6 @@ var (
 
 	//ErrRedisHandle Redis执行失败
 	ErrRedisHandle = errors.New("handle redis error")
+
+	ErrValueEmpty = errors.New("value empty")
 )

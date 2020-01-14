@@ -43,8 +43,8 @@ func (p *TaskLoader) Load() {
 func (p *TaskLoader) ModifyTask(task *model.TaskRow) {
 	if _, ok := p.TaskMap[task.AppID]; !ok {
 		p.TaskMap[task.AppID] = &model.Task{
-			AppID:         task.AppID,
-			Status:        task.Status,
+			AppID:  task.AppID,
+			Status: task.Status,
 		}
 	} else {
 		p.TaskMap[task.AppID].Status = task.Status

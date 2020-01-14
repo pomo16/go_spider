@@ -9,11 +9,11 @@ type CommentSpider struct {
 }
 
 type Comment struct {
-	CommentId   string
-	MainId      string
-	Content     string
-	Rating      string
-	Version     string
-	PublishTime string
-	CrawlTime   string
+	CommentId   string `json:"comment_id"`
+	MainId      string `json:"main_id"`
+	Content     string `json:"content"`
+	Rating      string `json:"rating"`
+	Version     string `json:"version"`
+	PublishTime string `json:"publish_time"`
+	CrawlTime   string `json:"crawl_time"`
 }
