@@ -29,7 +29,7 @@ const TestTiming = "*/1 * * * * *"
 const Topic = "test"
 
 //ConfFile 配置文件路径
-const ConfFile = "../config/config.yaml"
+const ConfFile = "config/config.yaml"
 
 //log文件相关
 const (
