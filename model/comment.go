@@ -11,6 +11,7 @@ type CommentSpider struct {
 type Comment struct {
 	CommentId   string `json:"comment_id"`
 	MainId      string `json:"main_id"`
+	Title       string `json:"title"`
 	Content     string `json:"content"`
 	Rating      string `json:"rating"`
 	Version     string `json:"version"`
