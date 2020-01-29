@@ -284,19 +284,21 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task, ct string) {
 	}
 
 	//爬取时间
-	crawlTime := time.Now().Format(consts.TimeStr)
+	crawlTime := time.Now()
 
 	//评论版本号匹配逻辑
 	for k, v := range cg {
 		comment := &model.Comment{
-			CommentId:   v.CommentId,
-			MainId:      utils.GenMainKey(k),
-			Title:       v.Title,
-			Content:     v.Content,
-			Rating:      v.Rating,
-			Version:     "UNKNOWN",
-			PublishTime: v.PublishTime,
-			CrawlTime:   crawlTime,
+			CommentId:        v.CommentId,
+			MainId:           utils.GenMainKey(k),
+			Title:            v.Title,
+			Content:          v.Content,
+			Rating:           v.Rating,
+			Version:          "UNKNOWN",
+			PublishTime:      v.PublishTime,
+			PublishTimeStamp: utils.GetTimeStampByTimeStr(v.PublishTime),
+			CrawlTime:        crawlTime.Format(consts.TimeStr),
+			CrawlTimeStamp:   crawlTime.Unix(),
 		}
 		if _, ok := vg[v.CommentId]; ok {
 			comment.Version = vg[v.CommentId]

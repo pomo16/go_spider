@@ -66,3 +66,9 @@ func AdjustCrawlTime(base string) string {
 		return base
 	}
 }
+
+//GetTimeStampByTimeStr 通过时间字符串获取时间戳
+func GetTimeStampByTimeStr(base string) int64 {
+	tt, _ := time.ParseInLocation(consts.TimeStr, base, time.Local)
+	return tt.Unix()
+}
