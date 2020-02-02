@@ -15,6 +15,7 @@ type VersionParams struct {
 
 //Task 爬取任务
 type Task struct {
-	AppID  string //苹果商店应用ID
-	Status int32  //渠道是否启用
+	AppID   string //苹果商店应用ID
+	AppName string //苹果商店应用名
+	Status  int32  //渠道是否启用
 }

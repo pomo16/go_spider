@@ -291,6 +291,8 @@ func Crawl(k *AppleSpiders, g Graph, t *model.Task, ct string) {
 		comment := &model.Comment{
 			CommentId:        v.CommentId,
 			MainId:           utils.GenMainKey(k),
+			AppID:            t.AppID,
+			AppName:          t.AppName,
 			Title:            v.Title,
 			Content:          v.Content,
 			Rating:           v.Rating,
