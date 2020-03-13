@@ -47,5 +47,5 @@ const (
 
 //ES
 const (
-	ESTempIndex = "temp"
+	ESIndex = "comment"
 )

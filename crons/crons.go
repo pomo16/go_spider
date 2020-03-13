@@ -5,6 +5,7 @@ import (
 	"gowatcher/go_spider/consts"
 	"gowatcher/go_spider/service"
 	"gowatcher/go_spider/service/elasticsearch"
+	"gowatcher/go_spider/service/text_analyze"
 	"gowatcher/go_spider/utils"
 )
 
@@ -41,7 +42,7 @@ func StartSpiders() {
 	T := service.GlobalTaskLoader.GetTaskMap()
 	service.StartCrawl(S, G, T)
 
-	elasticsearch.SinkGraph(G)
+	elasticsearch.SinkGraph(text_analyze.BatchPolarityAnalyze(G))
 
 	//Banned.This method will kill the program.
 	//logrus.Exit(0)

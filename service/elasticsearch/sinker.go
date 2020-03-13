@@ -10,13 +10,13 @@ import (
 )
 
 //InsertNewComment 插入新的反馈数据
-func InsertNewComment(ctx context.Context, comment *model.Comment) error {
+func InsertNewComment(ctx context.Context, comment *model.WholeComment) error {
 	if comment == nil {
 		return exceptions.ErrValueEmpty
 	}
 
 	_, err := elasticClient.Index().
-		Index(consts.ESTempIndex).
+		Index(consts.ESIndex).
 		Id(comment.MainId).
 		BodyJson(comment).
 		Do(ctx)
@@ -30,7 +30,7 @@ func InsertNewComment(ctx context.Context, comment *model.Comment) error {
 }
 
 //SinkGraph 评论集合落地
-func SinkGraph(graph service.Graph) {
+func SinkGraph(graph service.SinkerGraph) {
 	for _, comment := range graph {
 		err := InsertNewComment(context.Background(), comment)
 		if err == nil {

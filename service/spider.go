@@ -20,6 +20,9 @@ type VersionGraph map[string]string
 //Graph 总存储结构
 type Graph map[string]*model.Comment
 
+//SinkerGraph 落地完整结构
+type SinkerGraph map[string]*model.WholeComment
+
 //AppleCommentSpider 苹果应用商店评论爬虫
 type AppleCommentSpider struct {
 	Req        string
@@ -47,6 +50,12 @@ type AppleSpiders struct {
 //NewGraph 初始化存储对象
 func NewGraph() Graph {
 	g := make(Graph)
+	return g
+}
+
+//NewSinkerGraph 初始化存储对象
+func NewSinkerGraph() SinkerGraph {
+	g := make(SinkerGraph)
 	return g
 }
 
