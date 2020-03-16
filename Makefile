@@ -1,8 +1,5 @@
 RUN_NAME="go_spider"
 
-run:
-	./output/${RUN_NAME}_dev
-
 build:
 	gofmt -w .
 	chmod +x build.sh
