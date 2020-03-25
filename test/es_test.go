@@ -24,7 +24,7 @@ func TestConfig(t *testing.T) {
 func TestES(t *testing.T) {
 	elasticsearch.InitElasticSearch()
 
-	comment := &model.Comment{
+	comment := &model.WholeComment{
 		CommentId:   "10000",
 		MainId:      "test10000",
 		Content:     "test content",
