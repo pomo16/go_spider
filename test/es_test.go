@@ -41,7 +41,7 @@ func TestES(t *testing.T) {
 }
 
 func TestSinkGraph(t *testing.T) {
-	comment1 := &model.Comment{
+	comment1 := &model.WholeComment{
 		CommentId:   "1",
 		MainId:      "1",
 		Content:     "1",
@@ -50,7 +50,7 @@ func TestSinkGraph(t *testing.T) {
 		PublishTime: "1",
 		CrawlTime:   "1",
 	}
-	comment2 := &model.Comment{
+	comment2 := &model.WholeComment{
 		CommentId:   "2",
 		MainId:      "2",
 		Content:     "2",
@@ -60,6 +60,6 @@ func TestSinkGraph(t *testing.T) {
 		CrawlTime:   "2",
 	}
 
-	graph := service.Graph{"1": comment1, "2": comment2}
+	graph := service.SinkerGraph{"1": comment1, "2": comment2}
 	elasticsearch.SinkGraph(graph)
 }
