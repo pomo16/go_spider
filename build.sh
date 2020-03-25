@@ -6,7 +6,11 @@ mkdir output output/${RUN_NAME}_log
 cp -r config output/
 cp -r data output/
 export GO111MODULE=on
+# dev
+# go build -a -o output/${RUN_NAME} -ldflags "-w"
+
+# prod
 go build -a -o output/${RUN_NAME}
 
-# gojieba 不支持交叉编译
+# 取消交叉编译
 # CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o output/${RUN_NAME}
